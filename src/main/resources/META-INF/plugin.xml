@@ -1,15 +1,29 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.bodiam.intellijblulocodarktheme</id>
-    <name>intellij-bluloco-dark-theme</name>
+    <name>Bluloco Dark Theme</name>
     <vendor>bodiam</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
+    <description><![CDATA[
+    A fancy and sophisticated dark color scheme for IntelliJ-based IDEs.
+    <br/><br/>
+    Converted from the popular <a href="https://marketplace.visualstudio.com/items?itemName=uloco.theme-bluloco-dark">Bluloco Dark</a> VS Code theme
+    by Umut Topuzoğlu.
+    <br/><br/>
+    <b>Features:</b>
+    <ul>
+        <li>Comprehensive syntax highlighting for Java, Kotlin, Python, JavaScript, TypeScript, HTML, CSS, JSON, YAML, Markdown, SQL, and more</li>
+        <li>Full UI theming for all IntelliJ IDE components</li>
+        <li>Carefully mapped ANSI terminal colors</li>
+        <li>Git and VCS status colors</li>
+        <li>Diff viewer colors</li>
+    </ul>
+    ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.bodiam.intellijblulocodarktheme.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.bodiam.intellijblulocodarktheme.startup.MyProjectActivity" />
+        <themeProvider id="com.github.bodiam.intellijblulocodarktheme.bluloco_dark"
+                       path="/themes/bluloco_dark.theme.json"/>
     </extensions>
 </idea-plugin>
