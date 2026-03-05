@@ -109,10 +109,10 @@
       "inactiveColoredTabForeground": "#636d83"
     },
     "DragAndDrop": {
-      "areaBackground": "#2d333d",
+      "areaBackground": "#3691ff20",
       "areaBorderColor": "#3691ff",
-      "areaForeground": "#abb2bf",
-      "rowBackground": "#2d333d"
+      "areaForeground": "#ffffff",
+      "rowBackground": "#3691ff40"
     },
     "Editor": {
       "background": "#282c34",

@@ -7,9 +7,11 @@ A fancy and sophisticated dark color scheme for IntelliJ-based IDEs, converted f
 by [Umut Topuzoğlu](https://github.com/uloco).
 
 <!-- Plugin description -->
-A fancy and sophisticated dark color scheme for IntelliJ-based IDEs.
+A fancy and sophisticated premium dark color scheme for IntelliJ-based IDEs.
 
 Converted from the popular [Bluloco Dark](https://marketplace.visualstudio.com/items?itemName=uloco.theme-bluloco-dark) VS Code theme by Umut Topuzoğlu.
+
+This is a paid plugin available on the [JetBrains Marketplace](https://plugins.jetbrains.com).
 
 **Features:**
 - Comprehensive syntax highlighting for Java, Kotlin, Python, JavaScript, TypeScript, HTML, CSS, JSON, YAML, Markdown, SQL, and more

@@ -1,8 +1,10 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.bodiam.intellijblulocodarktheme</id>
+    <id>dev.jetplugins.blulocodarktheme</id>
     <name>Bluloco Dark Theme</name>
-    <vendor>bodiam</vendor>
+    <vendor url="https://github.com/Jetplugins" email="support@jetplugins.dev">Jetplugins</vendor>
+
+    <product-descriptor code="PBLULOCODARK" release-date="20260304" release-version="10"/>
 
     <depends>com.intellij.modules.platform</depends>
 
@@ -23,7 +25,7 @@
     ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
-        <themeProvider id="com.github.bodiam.intellijblulocodarktheme.bluloco_dark"
+        <themeProvider id="dev.jetplugins.blulocodarktheme.bluloco_dark"
                        path="/themes/bluloco_dark.theme.json"/>
     </extensions>
 </idea-plugin>
