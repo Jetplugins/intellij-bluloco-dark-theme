@@ -4,5 +4,7 @@
     "config:recommended",
     "schedule:monthly"
   ],
-  "timezone": "Australia/Sydney"
+  "timezone": "Australia/Sydney",
+  "labels": ["dependencies"],
+  "dependencyDashboard": true
 }

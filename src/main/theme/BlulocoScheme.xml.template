@@ -1,10 +1,10 @@
-<scheme name="Bluloco Dark" version="142" parent_scheme="Darcula">
+<scheme name="@SCHEME_NAME@" version="142" parent_scheme="Darcula">
   <metaInfo>
-    <property name="created">2024-01-01T00:00:00</property>
+    <property name="created">@GENERATED_AT@</property>
     <property name="ide">Idea</property>
     <property name="ideVersion">2025.2.0.0</property>
-    <property name="modified">2024-01-01T00:00:00</property>
-    <property name="originalScheme">Bluloco Dark</property>
+    <property name="modified">@GENERATED_AT@</property>
+    <property name="originalScheme">@SCHEME_NAME@</property>
   </metaInfo>
   <colors>
     <option name="ADDED_LINES_COLOR" value="237236"/>

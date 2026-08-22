@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-08-21T00:00:00",
+  "schemes": [
+    {
+      "id": "dark",
+      "name": "Bluloco Dark",
+      "file": "BlulocoDark.xml"
+    },
+    {
+      "id": "midnight",
+      "name": "Bluloco Midnight",
+      "file": "BlulocoMidnight.xml"
+    }
+  ],
+  "tokens": {
+    "editorBackground": {
+      "dark": "282c34",
+      "midnight": "1f2329"
+    },
+    "secondaryBackground": {
+      "dark": "22252a",
+      "midnight": "1b1f25"
+    },
+    "lineHighlight": {
+      "dark": "2d333d",
+      "midnight": "272c34"
+    },
+    "injectedBackground": {
+      "dark": "2d313a",
+      "midnight": "242931"
+    },
+    "selectionBackground": {
+      "dark": "28497a",
+      "midnight": "263f64"
+    },
+    "border": {
+      "dark": "3d434f",
+      "midnight": "353c47"
+    },
+    "strongBorder": {
+      "dark": "565e6e",
+      "midnight": "4a5362"
+    },
+    "mutedText": {
+      "dark": "636d83",
+      "midnight": "6f7a8e"
+    },
+    "vcsAnnotation2": {
+      "dark": "37404b",
+      "midnight": "303743"
+    },
+    "vcsAnnotation3": {
+      "dark": "404753",
+      "midnight": "39414d"
+    },
+    "vcsAnnotation4": {
+      "dark": "545862",
+      "midnight": "48515f"
+    }
+  }
+}

@@ -4,28 +4,37 @@
     <name>Bluloco Dark Theme</name>
     <vendor url="https://github.com/Jetplugins" email="support@jetplugins.dev">Jetplugins</vendor>
 
-    <product-descriptor code="PBLULOCODARK" release-date="20260304" release-version="10"/>
+    <product-descriptor code="PBLULOCODARK" release-date="20260821" release-version="20261"/>
 
     <depends>com.intellij.modules.platform</depends>
 
     <description><![CDATA[
-    A fancy and sophisticated dark color scheme for IntelliJ-based IDEs.
+    Bluloco brings vivid, easy-to-scan syntax colors to the modern IntelliJ Islands UI.
     <br/><br/>
-    Converted from the popular <a href="https://marketplace.visualstudio.com/items?itemName=uloco.theme-bluloco-dark">Bluloco Dark</a> VS Code theme
-    by Umut Topuzoğlu.
+    Choose <b>Bluloco Dark</b> for the original balanced charcoal appearance, or <b>Bluloco Midnight</b>
+    for a deeper canvas with quieter IDE chrome. Both variants keep code prominent while preserving clear
+    separation between editors, tool windows, popups, and navigation.
+    <br/><br/>
+    Based on the popular <a href="https://marketplace.visualstudio.com/items?itemName=uloco.theme-bluloco-dark">Bluloco Dark</a>
+    VS Code theme by Umut Topuzoğlu and carefully adapted for IntelliJ-based IDEs.
     <br/><br/>
     <b>Features:</b>
     <ul>
-        <li>Comprehensive syntax highlighting for Java, Kotlin, Python, JavaScript, TypeScript, HTML, CSS, JSON, YAML, Markdown, SQL, and more</li>
-        <li>Full UI theming for all IntelliJ IDE components</li>
-        <li>Carefully mapped ANSI terminal colors</li>
-        <li>Git and VCS status colors</li>
-        <li>Diff viewer colors</li>
+        <li>Two complete themes: balanced Bluloco Dark and deeper Bluloco Midnight</li>
+        <li>Purposeful syntax colors that make keywords, types, functions, strings, and values easy to distinguish</li>
+        <li>Native Islands styling with layered work areas, rounded surfaces, and a clear active tab</li>
+        <li>Coordinated action, object, and checkbox icons using Bluloco accent colors</li>
+        <li>Consistent colors across the editor, completion popups, settings, tool windows, terminal, VCS, and diff views</li>
+        <li>Broad language support, including Java, Kotlin, Python, JavaScript, TypeScript, HTML, CSS, JSON, YAML, Markdown, and SQL</li>
     </ul>
     ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
         <themeProvider id="dev.jetplugins.blulocodarktheme.bluloco_dark"
-                       path="/themes/bluloco_dark.theme.json"/>
+                       path="/themes/bluloco_dark.theme.json"
+                       targetUi="islands"/>
+        <themeProvider id="dev.jetplugins.blulocodarktheme.bluloco_midnight"
+                       path="/themes/bluloco_midnight.theme.json"
+                       targetUi="islands"/>
     </extensions>
 </idea-plugin>

@@ -2,26 +2,42 @@
 
 ![Build](https://github.com/Jetplugins/intellij-bluloco-dark-theme/workflows/Build/badge.svg)
 
-A fancy and sophisticated dark color scheme for IntelliJ-based IDEs, converted from the popular
-[Bluloco Dark](https://marketplace.visualstudio.com/items?itemName=uloco.theme-bluloco-dark) VS Code theme
-by [Umut Topuzoğlu](https://github.com/uloco).
+Bring Bluloco's vivid syntax colors and deep charcoal backgrounds to the modern IntelliJ Islands UI.
+Choose the balanced Dark theme or the lower-glare Midnight variant.
 
 <!-- Plugin description -->
-A fancy and sophisticated premium dark color scheme for IntelliJ-based IDEs.
+Bluloco brings vivid, easy-to-scan syntax colors to the modern IntelliJ Islands UI.
 
-Converted from the popular [Bluloco Dark](https://marketplace.visualstudio.com/items?itemName=uloco.theme-bluloco-dark) VS Code theme by Umut Topuzoğlu.
+Choose **Bluloco Dark** for the original balanced charcoal appearance, or **Bluloco Midnight** for a deeper canvas with quieter IDE chrome. Both variants are designed to keep code prominent while preserving clear separation between editors, tool windows, popups, and navigation.
+
+Based on the popular [Bluloco Dark](https://marketplace.visualstudio.com/items?itemName=uloco.theme-bluloco-dark) VS Code theme by Umut Topuzoğlu and carefully adapted for IntelliJ-based IDEs.
 
 This is a paid plugin available on the [JetBrains Marketplace](https://plugins.jetbrains.com).
 
 **Features:**
-- Comprehensive syntax highlighting for Java, Kotlin, Python, JavaScript, TypeScript, HTML, CSS, JSON, YAML, Markdown, SQL, and more
-- Full UI theming for all IntelliJ IDE components
-- Carefully mapped ANSI terminal colors
-- Git and VCS status colors
-- Diff viewer colors
+
+- Two complete themes: balanced Bluloco Dark and deeper Bluloco Midnight
+- Purposeful syntax colors that make keywords, types, functions, strings, and values easy to distinguish
+- Native Islands styling with layered work areas, rounded surfaces, and a clear active tab
+- Coordinated action, object, and checkbox icons using Bluloco accent colors
+- Consistent colors across the editor, completion popups, settings, tool windows, terminal, VCS, and diff views
+- Broad language support, including Java, Kotlin, Python, JavaScript, TypeScript, HTML, CSS, JSON, YAML, Markdown, and SQL
 <!-- Plugin description end -->
 
-## Color Palette
+## Theme Variants
+
+- **Bluloco Dark** keeps the original theme's charcoal canvas and vivid syntax palette while adopting the softer, layered Islands UI.
+- **Bluloco Midnight** uses a deeper editor canvas and quieter chrome for stronger focus, while sharing the same language coverage and Bluloco accents.
+
+## Dark vs Midnight
+
+The Marketplace assets are captured from a real IntelliJ sandbox through Remote Robot, not from a static mockup.
+
+![Editor comparison](marketplace/screenshots/01-editor-dark-vs-midnight.png)
+
+![Completion comparison](marketplace/screenshots/03-completion-dark-vs-midnight.png)
+
+## Bluloco Dark Color Palette
 
 | Element              | Color                                                       |
 |----------------------|-------------------------------------------------------------|
@@ -51,6 +67,23 @@ This is a paid plugin available on the [JetBrains Marketplace](https://plugins.j
 
   Download the [latest release](https://github.com/Jetplugins/intellij-bluloco-dark-theme/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+
+## Development
+
+The editor schemes are generated into `build/generated/theme-resources` from
+`src/main/theme/BlulocoScheme.xml.template` and `src/main/theme/editor-schemes.json`.
+
+```bash
+./gradlew check buildPlugin
+```
+
+To launch IntelliJ, discover every registered theme, assert its live UI colors, and regenerate the sample-code artwork and five Marketplace comparisons:
+
+```bash
+./gradlew createScreenshots
+```
+
+`createScreenshots` is supported on macOS and Linux. It writes annotated 1200 × 760 theme artwork to `marketplace/screenshots/themes`, while raw UI states and all-theme comparisons are generated alongside it. Run `./gradlew createMarketplaceMedia` to also create the 13-second Marketplace demo video (requires `ffmpeg`). The dedicated GitHub Actions workflow runs the same Robot assertions on macOS, Linux, and Windows and uploads the raw captures as build artifacts.
 
 ## Credits
 
