@@ -1,0 +1,67 @@
+name: Draft Release
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: automated-draft-release
+  cancel-in-progress: true
+
+jobs:
+  draft-release:
+    name: Build draft release
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Fetch sources
+        uses: actions/checkout@v7
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6.3.0
+
+      - name: Build plugin distribution
+        run: ./gradlew buildPlugin
+
+      - name: Create latest draft release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          VERSION=$(sed -n 's/^pluginVersion[[:space:]]*=[[:space:]]*//p' gradle.properties)
+          test -n "$VERSION"
+
+          mkdir -p build/tmp
+          ./gradlew getChangelog \
+            --project-version "$VERSION" \
+            --no-header \
+            --no-links \
+            --no-empty-sections \
+            --quiet \
+            --console=plain \
+            --output-file=build/tmp/changelog.md
+
+          printf '<!-- automated-plugin-draft -->\n\n' > build/tmp/release-note.md
+          sed -n '1,$p' build/tmp/changelog.md >> build/tmp/release-note.md
+
+          gh api --paginate 'repos/{owner}/{repo}/releases?per_page=100' \
+            --jq '.[] | select(.draft == true and ((.body // "") | contains("<!-- automated-plugin-draft -->"))) | .id' \
+            | xargs -r -I '{}' gh api -X DELETE 'repos/{owner}/{repo}/releases/{}'
+
+          gh release create "$VERSION" \
+            --draft \
+            --target "$GITHUB_SHA" \
+            --title "$VERSION" \
+            --notes-file build/tmp/release-note.md \
+            build/distributions/*.zip

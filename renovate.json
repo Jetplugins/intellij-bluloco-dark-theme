@@ -1,0 +1,10 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "schedule:monthly"
+  ],
+  "timezone": "Australia/Sydney",
+  "labels": ["dependencies"],
+  "dependencyDashboard": true
+}

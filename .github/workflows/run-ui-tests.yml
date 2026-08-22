@@ -1,65 +1,85 @@
-# GitHub Actions Workflow for launching UI tests on Linux, Windows, and Mac in the following steps:
-# - Prepare and launch IDE with your plugin and robot-server plugin, which is needed to interact with the UI.
-# - Wait for IDE to start.
-# - Run UI tests with a separate Gradle task.
-#
-# Please check https://github.com/JetBrains/intellij-ui-test-robot for information about UI tests with IntelliJ Platform.
-#
-# Workflow is triggered manually.
-
 name: Run UI Tests
+
 on:
-  workflow_dispatch
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "build.gradle.kts"
+      - "gradle/**"
+      - "src/main/resources/themes/**"
+      - "src/main/theme/**"
+      - "src/uiTest/**"
+      - "scripts/create-screenshots.sh"
+      - ".github/workflows/run-ui-tests.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-
-  testUI:
+  robot-theme-assertions:
+    name: Robot theme assertions (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-latest
-            runIde: |
-              export DISPLAY=:99.0
-              Xvfb -ac :99 -screen 0 1920x1080x16 &
-              gradle runIdeForUiTests &
-          - os: windows-latest
-            runIde: start gradlew.bat runIdeForUiTests
-          - os: macos-latest
-            runIde: ./gradlew runIdeForUiTests &
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-
-      # Check out the current repository
       - name: Fetch Sources
         uses: actions/checkout@v6
 
-      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
           distribution: zulu
           java-version: 21
 
-      # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@v6
         with:
           cache-read-only: true
 
-      # Run IDEA prepared for UI testing
-      - name: Run IDE
-        run: ${{ matrix.runIde }}
+      - name: Start Xvfb
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          export DISPLAY=:99.0
+          echo "DISPLAY=${DISPLAY}" >> "$GITHUB_ENV"
+          Xvfb -ac :99 -screen 0 1920x1080x24 > build-xvfb.log 2>&1 &
 
-      # Wait for IDEA to be started
-      - name: Health Check
-        uses: jtalk/url-health-check-action@v4
+      - name: Start IntelliJ with Robot server
+        if: runner.os != 'Windows'
+        shell: bash
+        run: ./gradlew runIdeForUiTests > build-ui-test-ide.log 2>&1 &
+
+      - name: Start IntelliJ with Robot server (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Start-Process -FilePath ".\gradlew.bat" `
+            -ArgumentList "runIdeForUiTests" `
+            -RedirectStandardOutput "build-ui-test-ide.log" `
+            -RedirectStandardError "build-ui-test-ide-error.log"
+
+      - name: Wait for Robot server
+        uses: jtalk/url-health-check-action@v5
         with:
           url: http://127.0.0.1:8082
-          max-attempts: 15
-          retry-delay: 30s
+          max-attempts: 30
+          retry-delay: 10s
 
-      # Run tests
-      - name: Tests
-        run: ./gradlew test
+      - name: Assert themes and capture screenshots
+        run: ./gradlew uiScreenshotTest -PcloseIde=true
+
+      - name: Upload Robot screenshots and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: robot-theme-screenshots-${{ matrix.os }}
+          if-no-files-found: warn
+          path: |
+            build/ui-test/screenshots
+            build/reports/tests/uiScreenshotTest
+            build-ui-test-ide*.log
+            build-xvfb.log
