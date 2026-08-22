@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2026.1.0] - 2026-08-22
+
 ### Added
 
 - Added Bluloco Midnight, a deeper and quieter alternative for users who prefer a lower-glare workspace
@@ -41,6 +43,7 @@
 - Git and VCS status colors
 - Diff viewer colors
 
-[Unreleased]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/1.0.1...HEAD
+[Unreleased]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/2026.1.0...HEAD
+[2026.1.0]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/1.0.1...2026.1.0
 [1.0.1]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/commits/1.0.0
