@@ -85,6 +85,12 @@ To launch IntelliJ, discover every registered theme, assert its live UI colors, 
 
 `createScreenshots` is supported on macOS and Linux. It writes annotated 1200 × 760 theme artwork to `marketplace/screenshots/themes`, while raw UI states and all-theme comparisons are generated alongside it. Run `./gradlew createMarketplaceMedia` to also create the 13-second Marketplace demo video (requires `ffmpeg`). The dedicated GitHub Actions workflow runs the same Robot assertions on macOS, Linux, and Windows and uploads the raw captures as build artifacts.
 
+### Release automation
+
+Every push creates a fresh draft GitHub release for the version in `gradle.properties`, including the built plugin ZIP. Publishing that draft triggers the lightweight JetBrains Marketplace workflow without running Plugin Verifier.
+
+Configure the `PUBLISH_TOKEN` repository secret before publishing.
+
 ## Credits
 
 - Original VS Code theme: [Bluloco Dark](https://github.com/uloco/theme-bluloco-dark) by [Umut Topuzoğlu](https://github.com/uloco)
