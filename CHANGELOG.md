@@ -1,10 +1,8 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# intellij-bluloco-dark-theme Changelog
+# Bluloco Theme Changelog
 
 ## [Unreleased]
-
-## [2026.1.0] - 2026-08-21
 
 ### Added
 
@@ -43,7 +41,6 @@
 - Git and VCS status colors
 - Diff viewer colors
 
-[Unreleased]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/2026.1.0...HEAD
-[2026.1.0]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/1.0.1...2026.1.0
+[Unreleased]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/1.0.1...HEAD
 [1.0.1]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/commits/1.0.0
