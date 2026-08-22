@@ -87,7 +87,7 @@ To launch IntelliJ, discover every registered theme, assert its live UI colors, 
 
 ### Release automation
 
-Every push creates a fresh draft GitHub release for the version in `gradle.properties`, including the built plugin ZIP. Publishing that draft triggers the lightweight JetBrains Marketplace workflow without running Plugin Verifier.
+Add user-facing changes to the `Unreleased` section of `CHANGELOG.md`. Every branch push runs the Build and Test jobs, then uses that section to create a fresh draft GitHub release for the version in `gradle.properties`, including the built plugin ZIP. Publishing the draft triggers the lightweight JetBrains Marketplace workflow without running Plugin Verifier, moves the release notes into the versioned changelog section, and opens a pull request containing that changelog update.
 
 Configure the `PUBLISH_TOKEN` repository secret before publishing.
 

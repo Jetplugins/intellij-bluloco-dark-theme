@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: marketplace-${{ github.event.release.tag_name || inputs.release_version }}
@@ -51,12 +52,53 @@ jobs:
           test "$RELEASE_VERSION" = "$PLUGIN_VERSION"
           test -n "$PUBLISH_TOKEN"
 
+      - name: Patch changelog
+        if: github.event_name == 'release' && github.event.release.body != ''
+        env:
+          CHANGELOG: ${{ github.event.release.body }}
+        shell: bash
+        run: |
+          RELEASE_NOTE=build/tmp/release-note.md
+          mkdir -p "$(dirname "$RELEASE_NOTE")"
+          printf '%s\n' "$CHANGELOG" \
+            | sed '/<!-- automated-plugin-draft -->/d' \
+            > "$RELEASE_NOTE"
+
+          ./gradlew patchChangelog --release-note-file="$RELEASE_NOTE"
+
       - name: Publish plugin
         env:
           PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         run: ./gradlew publishPlugin
 
-      - name: Upload signed plugin to GitHub release
+      - name: Upload plugin to GitHub release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload "$RELEASE_VERSION" build/distributions/*.zip --clobber
+
+      - name: Propose changelog update
+        if: github.event_name == 'release' && github.event.release.body != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          BRANCH="changelog-update-$RELEASE_VERSION"
+
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git switch -c "$BRANCH"
+          git add CHANGELOG.md
+
+          if git diff --cached --quiet; then
+            echo "CHANGELOG.md is already current"
+            exit 0
+          fi
+
+          git commit -m "Update changelog for $RELEASE_VERSION"
+          git push --set-upstream origin "$BRANCH"
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Update changelog for $RELEASE_VERSION" \
+            --body "Moves the published release notes from \`Unreleased\` into the \`$RELEASE_VERSION\` section of \`CHANGELOG.md\`."
