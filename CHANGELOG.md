@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [2026.1.1] - 2026-09-04
+
 ### Fixed
 
 - Replaced the conflicting commercial EULA with GPLv3 terms and added the upstream attribution and
@@ -48,7 +50,8 @@
 - Git and VCS status colors
 - Diff viewer colors
 
-[Unreleased]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/2026.1.0...HEAD
+[Unreleased]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/2026.1.1...HEAD
+[2026.1.1]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/2026.1.0...2026.1.1
 [2026.1.0]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/1.0.1...2026.1.0
 [1.0.1]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/Jetplugins/intellij-bluloco-dark-theme/commits/1.0.0
