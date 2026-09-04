@@ -1,11 +1,14 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.platform.gradle.tasks.BuildPluginTask
 import groovy.json.JsonSlurper
 import javax.xml.parsers.DocumentBuilderFactory
 import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 import java.util.Locale
+import java.util.zip.ZipFile
+import java.util.zip.ZipInputStream
 
 abstract class StripProductDescriptorTask : DefaultTask() {
     @get:InputDirectory
@@ -313,6 +316,15 @@ tasks {
 
     processResources {
         dependsOn(generateEditorSchemes)
+        val pluginVersion = project.version.toString()
+        inputs.property("licenseNoticePluginVersion", pluginVersion)
+        from(rootProject.files("LICENSE", "THIRD_PARTY_NOTICES.md")) {
+            into("META-INF")
+        }
+        from(rootProject.file("SOURCE_CODE.md")) {
+            into("META-INF")
+            expand("pluginVersion" to pluginVersion)
+        }
     }
 
     withType<JavaCompile>().configureEach {
@@ -442,6 +454,58 @@ tasks {
 
     publishPlugin {
         dependsOn(patchChangelog)
+    }
+
+    named<BuildPluginTask>("buildPlugin") {
+        val finalArchive = archiveFile
+        doLast {
+            val distribution = finalArchive.get().asFile
+            check(distribution.isFile) { "Plugin distribution was not created: $distribution" }
+
+            val requiredResources = mapOf(
+                "META-INF/LICENSE" to listOf("GNU GENERAL PUBLIC LICENSE", "Version 3"),
+                "META-INF/THIRD_PARTY_NOTICES.md" to listOf(
+                    "uloco/theme-bluloco-dark",
+                    "GNU Lesser General Public License version 3",
+                    "section 3",
+                ),
+                "META-INF/SOURCE_CODE.md" to listOf(
+                    "https://github.com/Jetplugins/intellij-bluloco-dark-theme/tree/2026.1.1",
+                ),
+            )
+            val foundResources = mutableMapOf<String, String>()
+
+            ZipFile(distribution).use { outerZip ->
+                val pluginJars = outerZip.entries().asSequence()
+                    .filter { !it.isDirectory && it.name.contains("/lib/") && it.name.endsWith(".jar") }
+                    .toList()
+                check(pluginJars.isNotEmpty()) { "No plugin JAR found in $distribution" }
+
+                pluginJars.forEach { pluginJar ->
+                    ZipInputStream(outerZip.getInputStream(pluginJar)).use { nestedZip ->
+                        while (true) {
+                            val entry = nestedZip.nextEntry ?: break
+                            if (!entry.isDirectory && entry.name in requiredResources) {
+                                foundResources[entry.name] = nestedZip.readBytes().toString(Charsets.UTF_8)
+                            }
+                        }
+                    }
+                }
+            }
+
+            val errors = requiredResources.flatMap { (path, requiredText) ->
+                val contents = foundResources[path]
+                when {
+                    contents == null -> listOf("missing $path")
+                    else -> requiredText.filterNot(contents::contains).map { "missing '$it' from $path" }
+                }
+            }
+            check(errors.isEmpty()) {
+                "Plugin distribution licensing verification failed:\n" +
+                    errors.joinToString("\n") { "  - $it" }
+            }
+            logger.lifecycle("Verified GPL terms, upstream notices, and version-matched source directions in ${distribution.name}")
+        }
     }
 
 }

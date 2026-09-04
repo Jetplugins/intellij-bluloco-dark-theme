@@ -12,7 +12,9 @@ Choose **Bluloco Dark** for the original balanced charcoal appearance, or **Blul
 
 Based on the popular [Bluloco Dark](https://marketplace.visualstudio.com/items?itemName=uloco.theme-bluloco-dark) VS Code theme by Umut Topuzoğlu and carefully adapted for IntelliJ-based IDEs.
 
-This is a paid plugin available on the [JetBrains Marketplace](https://plugins.jetbrains.com).
+The [JetBrains Marketplace](https://plugins.jetbrains.com) charges for access to its delivery channel,
+updates, and support. Once received, the plugin remains free software under GPLv3, including the
+rights to use, study, modify, and redistribute it.
 
 **Features:**
 
@@ -95,3 +97,12 @@ Configure the `PUBLISH_TOKEN` repository secret before publishing.
 
 - Original VS Code theme: [Bluloco Dark](https://github.com/uloco/theme-bluloco-dark) by [Umut Topuzoğlu](https://github.com/uloco)
 - IntelliJ plugin based on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+
+## License
+
+This plugin is free software distributed under the [GNU General Public License v3.0](LICENSE).
+It is a modified port of the upstream
+[Bluloco Dark theme](https://github.com/uloco/theme-bluloco-dark), originally licensed under the
+GNU Lesser General Public License v3.0. The modified theme is distributed under GPLv3 using the
+conversion permission in section 3 of LGPLv3. See [the third-party notices](THIRD_PARTY_NOTICES.md)
+and [the source-code notice](SOURCE_CODE.md).

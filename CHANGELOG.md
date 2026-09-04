@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Replaced the conflicting commercial EULA with GPLv3 terms and added the upstream attribution and
+  version-matched source directions to the plugin distribution
+
 ## [2026.1.0] - 2026-08-22
 
 ### Added
